@@ -15,7 +15,17 @@ const compilerForSchema = (schema) => {
   }
 }
 
-module.exports = (schemaLoc, dataLoc) => {
+exports.bundle = (schemaLoc) => {
+  if(schemaLoc == null){
+    return Promise.reject('You must specify a schema location.');
+  }
+  return $RefParser.dereference(schemaLoc)
+    .then(schema => {
+      console.info(JSON.stringify(schema, null, '  '));
+    });
+};
+
+exports.validate = (schemaLoc, dataLoc) => {
   if(schemaLoc == null){
     return Promise.reject('You must specify a schema location.');
   }
@@ -24,7 +34,7 @@ module.exports = (schemaLoc, dataLoc) => {
       const ajv = compilerForSchema(schema);
       const schemaValid = ajv.validateSchema(schema);
       if(schemaValid){
-        return ajv.compile(schema);
+        return { ajv: ajv, validator: ajv.compile(schema)};
       } else {
         console.warn('Errors:', ajv.errorsText());
         //schema invalid
@@ -39,7 +49,7 @@ module.exports = (schemaLoc, dataLoc) => {
           return Promise.reject('Schema did not validate, however no errors were present.');
         }
       }
-    }).then(validator => {
+    }).then(({ajv, validator}) => {
       //schema valid
       if(dataLoc){
         return new Promise((resolve, reject) => {
@@ -52,8 +62,8 @@ module.exports = (schemaLoc, dataLoc) => {
                 resolve('Data validated successfully');
               } else {
                 reject([
-                  `Found ${validator.errors.length} errors in your data.`,
-                  ...validator.errors.map((err, idx) => `[${idx}] "${err.keyword}" ${err.message}\n    at [${err.dataPath}]`)
+                  `Found ${validator.errors.length} errors in your data file.`,
+                  ajv.errorsText(validator.errors, { separator: `${os.EOL}  `, dataVar: 'root' })
                 ].join(os.EOL));
               }
             }
