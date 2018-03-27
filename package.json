@@ -1,0 +1,19 @@
+{
+  "name": "jsv",
+  "version": "1.0.0",
+  "description": "json schema validator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bill Smith",
+  "license": "MIT",
+  "dependencies": {
+    "ajv": "^6.4.0",
+    "json-schema-ref-parser": "^5.0.0",
+    "yargs": "^11.0.0"
+  },
+  "bin": {
+    "jsv": "cmd.js"
+  }
+}
