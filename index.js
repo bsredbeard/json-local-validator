@@ -57,7 +57,7 @@ exports.validate = (schemaLoc, dataLoc) => {
             if(err) {
               reject(err);
             } else {
-              const dataValid = validator(data);
+              const dataValid = validator(JSON.parse(data));
               if(dataValid){
                 resolve('Data validated successfully');
               } else {
