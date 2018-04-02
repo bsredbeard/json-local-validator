@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Bill Smith",
+  "author": "bsredbeard",
   "license": "MIT",
   "dependencies": {
     "ajv": "^6.4.0",
@@ -14,6 +14,6 @@
     "yargs": "^11.0.0"
   },
   "bin": {
-    "jsv": "cmd.js"
+    "jlv": "cmd.js"
   }
 }
