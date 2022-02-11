@@ -9,7 +9,7 @@
   "author": "bsredbeard",
   "license": "MIT",
   "dependencies": {
-    "ajv": "^6.4.0",
+    "ajv": "^6.12.3",
     "json-schema-ref-parser": "^5.0.0",
     "yargs": "^11.0.0"
   },
